@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neu in Bern</title>
+<meta name="description" content="Die ersten 30 Tage in Bern: Anmeldung, Krankenkasse, Serafe, Abfall, Schule, Deutsch, Nachbarn, Notfall. Jede Frist mit offizieller Quelle und Prüfdatum. DE/EN/SK, kein Tracking.">
+<style>
+:root{--bg:#141c2b;--card:#1c2740;--line:#2e3d5e;--txt:#f0f4ff;--mut:#a8b6d3;--acc:#ffb347;--ok:#7ee2a8;--bad:#ff7b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:17px/1.5 -apple-system,system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px 16px 40px}
+h1{font-size:24px;margin:8px 0 2px}.sub{color:var(--mut);font-size:14px;margin-bottom:12px}
+.lang{float:right}.lang button{background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:4px 8px;font-size:13px;cursor:pointer}.lang button[aria-pressed="true"]{background:var(--acc);color:#321;border-color:var(--acc)}
+.prog{height:10px;border-radius:5px;background:var(--card);border:1px solid var(--line);overflow:hidden;margin:8px 0 4px}.prog i{display:block;height:100%;background:var(--ok);width:0}
+.pt{font-size:13px;color:var(--mut);margin-bottom:8px}
+label.it{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0;cursor:pointer}
+label.it input{width:22px;height:22px;margin:2px 0 0;flex:none;accent-color:var(--ok)}
+label.it b{display:block;font-size:16px}label.it .d{font-size:14px;color:var(--mut);margin-top:2px}
+label.it .dl{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--acc);color:#321;font-weight:700;margin-right:6px}
+label.it .dl.hard{background:var(--bad);color:#fff}
+label.it .src{font-size:12px;color:var(--mut);margin-top:6px}label.it .src a{color:var(--acc)}
+label.it.done{opacity:.55}
+.foot{color:var(--mut);font-size:13px;margin-top:26px;border-top:1px solid var(--line);padding-top:10px}.foot a{color:var(--acc)}
+@media print{body{background:#fff;color:#000}.lang,.prog,.pt{display:none}label.it{border-color:#999}label.it .d,.foot,.src{color:#333}}
+</style>
+</head>
+<body>
+<main>
+<div class="lang" role="group"><button data-l="de" aria-pressed="true">DE</button><button data-l="en" aria-pressed="false">EN</button><button data-l="sk" aria-pressed="false">SK</button></div>
+<h1 id="h"></h1><div class="sub" id="s"></div>
+<div class="prog"><i id="bar"></i></div><div class="pt" id="pt"></div>
+<div id="list"></div>
+<div class="foot" id="foot"></div>
+</main>
+<script>
+(function(){
+const V="25. 9. 2026"; // Prüfdatum aller Quellen
+const SRC={
+ zuzug:["bern.ch › Zuzug, Umzug, Wegzug","https://www.bern.ch/themen/zuzug-umzug-wegzug/"],
+ bag:["BAG › Versicherungspflicht","https://www.bag.admin.ch/de/krankenversicherung-versicherungspflicht-fuer-in-der-schweiz-wohnhafte-versicherte"],
+ serafe:["serafe.ch","https://www.serafe.ch/de/"],
+ abfall:["bern.ch › Kehricht","https://www.bern.ch/themen/abfall/abfuhr/abfallarten/kehricht-und-kleinsperrgut"],
+ schule:["bern.ch › FAQ Anmeldung Kindergarten","https://www.bern.ch/themen/bildung/schule/eltern-und-schule/faq-anmeldung-kindergarten-basisstufe"],
+ deutsch:["bern.ch › Deutsch lernen","https://www.bern.ch/themen/auslanderinnen-und-auslander/deutsch-lernen"],
+ nachbar:["nachbarschaft-bern.ch","https://www.nachbarschaft-bern.ch/"],
+ aare:["bern.ch › Aare you safe","https://www.bern.ch/themen/sicherheit/pravention/aare-you-safe"],
+ miete:["Mieterverband › Formular Anfangsmietzins","https://www.mieterverband.ch/news/faq-formular-mitteilung-anfangsmietzins/"],
+};
+const L={
+ de:{h:"Neu in Bern: die ersten 30 Tage",s:"Was zuerst, mit Frist und offizieller Quelle. Jede Zeile wurde am "+V+" gegen die verlinkte Seite geprüft. Abhaken bleibt im Browser.",done:"erledigt",src:"Quelle",hard:"Frist",soft:"bald",
+  items:[
+   ["14 Tage","hard","Anmelden bei der Stadt","Innert 14 Tagen nach dem Einzug über das Portal eUmzugCH anmelden, oder persönlich bei den Einwohnerdiensten, Predigergasse 5. Aus dem Ausland: Formular, gültiges Reisedokument, Mietvertrag; Drittstaaten zusätzlich Einreisebewilligung.","zuzug"],
+   ["3 Monate","hard","Krankenkasse abschliessen","Spätestens drei Monate nach der Wohnsitznahme eine Grundversicherung abschliessen. Rechtzeitig: Schutz rückwirkend ab Einzug (Prämien ebenfalls rückwirkend). Zu spät: Schutz erst ab Beitritt und bei nicht entschuldbarer Verspätung ein Prämienzuschlag.","bag"],
+   ["automatisch","soft","Serafe (Radio- und TV-Abgabe)","Kommt von selbst: die Einwohnerdienste melden den Haushalt monatlich an Serafe. Ein Haushalt zahlt eine Abgabe, CHF 335 pro Jahr (ab 1. 1. 2027: CHF 312). Nicht doppelt zahlen, wenn ihr zusammenzieht: Haushalt zusammenführen lassen.","serafe"],
+   ["Woche 1","soft","Abfall: nur Gebührensäcke","Hauskehricht darf nur im offiziellen Gebührensack der Stadt raus (Coop, Migros, Kioske). Abfuhrtage und Recycling: Entsorgung-Bern-App der Stadt. Glas, Alu, Kleider: Sammelstellen, siehe recycling-bern (gleicher Ordner).","abfall"],
+   ["sofort bei Kindern","hard","Schule und Kindergarten anmelden","Kindergarten ist obligatorisch ab dem Jahr, in dem das Kind bis 31. Juli vier wird; Eintritt im August. Zuziehende Familien melden sich direkt beim Schulamt der Stadt Bern; die Schule wird nach Wohnort zugeteilt, keine freie Wahl.","schule"],
+   ["Monat 1","soft","Deutsch: Kurs oder Sprachcafé","Kantonaler Kurs-Finder unter be.ch/sprachkurse-migration. DeutschBon der Stadt: 600 Gutscheine à CHF 400 ab 1. 9. 2026. KulturLegi gibt Rabatt bei kleinem Einkommen. Übersicht: deutsch-lernen-bern (gleicher Ordner).","deutsch"],
+   ["beim Einzug","soft","Miete: Formular zum Anfangsmietzins","Seit 1. 12. 2025 gilt im Kanton Bern die Formularpflicht: die Vermieterin muss den früheren Mietzins offenlegen. Ein zu hoher Anfangsmietzins kann innert 30 Tagen nach Übernahme bei der Schlichtungsbehörde angefochten werden.","miete"],
+   ["Woche 2","soft","Nachbarn kennenlernen","Nachbarschaft Bern vermittelt gratis Hilfe zwischen Nachbarn (bis 3 Stunden pro Woche). Für den eigenen Hauseingang: treppenhaus-zettel (gleicher Ordner).","nachbar"],
+   ["Sommer","soft","Aare: erst lesen, dann rein","Die Aare ist kein Schwimmbad. Regeln der Stadt unter „Aare you safe“; aktuelle Temperatur und Abfluss: aare-bern (gleicher Ordner). Notfall: 144 Sanität, 117 Polizei, 118 Feuerwehr, 1414 Rega.","aare"],
+  ],
+  foot:'Zusammengestellt aus offiziellen Seiten von Stadt Bern, Kanton Bern und Bund, Prüfdatum '+V+'. Fristen und Beträge ändern sich: die verlinkte Quelle gilt, nicht diese Seite. Keine Rechtsberatung. Kein Tracking. <a href="https://github.com/richardcervenka111-create/neu-in-bern">GitHub</a> · MIT'},
+ en:{h:"New in Bern: the first 30 days",s:"What comes first, with deadline and official source. Every line was checked against the linked page on "+V+". Ticks stay in your browser.",done:"done",src:"Source",hard:"deadline",soft:"soon",
+  items:[
+   ["14 days","hard","Register with the city","Within 14 days of moving in, register via the eUmzugCH portal or in person at the residents’ office, Predigergasse 5. From abroad: form, valid travel document, rental contract; third-country nationals also the entry permit.","zuzug"],
+   ["3 months","hard","Take out health insurance","At the latest three months after taking residence, take out basic insurance. On time: cover backdated to arrival (premiums too). Late: cover only from enrolment and, if the delay is not excusable, a premium surcharge.","bag"],
+   ["automatic","soft","Serafe (radio and TV fee)","Comes by itself: the residents’ office reports your household to Serafe monthly. One household pays one fee, CHF 335 per year (from 1 Jan 2027: CHF 312). Do not pay twice when moving in together: have the households merged.","serafe"],
+   ["week 1","soft","Waste: official bags only","Household waste may only go out in the city’s official fee bag (Coop, Migros, kiosks). Collection days and recycling: the city’s Entsorgung Bern app. Glass, aluminium, clothes: collection points, see recycling-bern (same folder).","abfall"],
+   ["at once, with children","hard","Register school and kindergarten","Kindergarten is compulsory from the year the child turns four by 31 July; entry in August. Families moving in register directly with the city’s Schulamt; the school is assigned by address, no free choice.","schule"],
+   ["month 1","soft","German: course or language café","Cantonal course finder at be.ch/sprachkurse-migration. City DeutschBon: 600 vouchers of CHF 400 from 1 Sept 2026. KulturLegi gives a discount on low income. Overview: deutsch-lernen-bern (same folder).","deutsch"],
+   ["on moving in","soft","Rent: form on the initial rent","Since 1 Dec 2025 the Canton of Bern requires the form: the landlord must disclose the previous rent. An excessive initial rent can be challenged within 30 days of taking over the flat at the conciliation authority.","miete"],
+   ["week 2","soft","Meet the neighbours","Nachbarschaft Bern arranges free help between neighbours (up to 3 hours a week). For your own stairwell: treppenhaus-zettel (same folder).","nachbar"],
+   ["summer","soft","Aare: read first, then swim","The Aare is not a pool. The city’s rules are at “Aare you safe”; live temperature and flow: aare-bern (same folder). Emergency: 144 ambulance, 117 police, 118 fire, 1414 Rega.","aare"],
+  ],
+  foot:'Compiled from official pages of the City of Bern, Canton of Bern and the Confederation, checked on '+V+'. Deadlines and amounts change: the linked source prevails, not this page. Not legal advice. No tracking. <a href="https://github.com/richardcervenka111-create/neu-in-bern">GitHub</a> · MIT'},
+ sk:{h:"Nový v Berne: prvých 30 dní",s:"Čo najprv, s lehotou a oficiálnym zdrojom. Každý riadok bol "+V+" overený proti odkazovanej stránke. Odškrtnutia ostávajú v prehliadači.",done:"hotové",src:"Zdroj",hard:"lehota",soft:"čoskoro",
+  items:[
+   ["14 dní","hard","Prihlásiť sa na meste","Do 14 dní od nasťahovania cez portál eUmzugCH alebo osobne na Einwohnerdienste, Predigergasse 5. Zo zahraničia: formulár, platný cestovný doklad, nájomná zmluva; tretie krajiny navyše povolenie na vstup.","zuzug"],
+   ["3 mesiace","hard","Uzavrieť zdravotné poistenie","Najneskôr tri mesiace po zriadení bydliska uzavrieť základné poistenie. Včas: krytie spätne od príchodu (aj poistné). Neskoro: krytie až od vstupu a pri neospravedlniteľnom meškaní prirážka k poistnému.","bag"],
+   ["automaticky","soft","Serafe (poplatok za rádio a TV)","Príde samo: Einwohnerdienste hlásia domácnosť Serafe každý mesiac. Jedna domácnosť platí jeden poplatok, 335 CHF ročne (od 1. 1. 2027: 312 CHF). Neplať dvakrát, keď sa sťahujete spolu: nechaj domácnosti zlúčiť.","serafe"],
+   ["1. týždeň","soft","Odpad: len poplatkové vrecia","Domový odpad smie von len v oficiálnom poplatkovom vreci mesta (Coop, Migros, kiosky). Dni zvozu a recyklácia: mestská appka Entsorgung Bern. Sklo, hliník, textil: zberné miesta, pozri recycling-bern (rovnaký priečinok).","abfall"],
+   ["hneď pri deťoch","hard","Prihlásiť školu a škôlku","Škôlka je povinná od roka, v ktorom dieťa do 31. júla dovŕši štyri roky; nástup v auguste. Prisťahované rodiny sa hlásia priamo na Schulamt mesta Bern; škola sa prideľuje podľa bydliska, bez voľného výberu.","schule"],
+   ["1. mesiac","soft","Nemčina: kurz alebo jazyková kaviareň","Kantonálny vyhľadávač kurzov na be.ch/sprachkurse-migration. Mestský DeutschBon: 600 poukazov po 400 CHF od 1. 9. 2026. KulturLegi dáva zľavu pri nízkom príjme. Prehľad: deutsch-lernen-bern (rovnaký priečinok).","deutsch"],
+   ["pri nasťahovaní","soft","Nájom: formulár o počiatočnom nájomnom","Od 1. 12. 2025 platí v kantóne Bern formulárová povinnosť: prenajímateľ musí zverejniť predchádzajúce nájomné. Príliš vysoké počiatočné nájomné sa dá napadnúť do 30 dní od prevzatia bytu na zmierovacom orgáne.","miete"],
+   ["2. týždeň","soft","Spoznať susedov","Nachbarschaft Bern sprostredkúva bezplatnú pomoc medzi susedmi (do 3 hodín týždenne). Pre vlastné schodisko: treppenhaus-zettel (rovnaký priečinok).","nachbar"],
+   ["leto","soft","Aare: najprv čítať, potom dnu","Aare nie je plaváreň. Pravidlá mesta v „Aare you safe“; aktuálna teplota a prietok: aare-bern (rovnaký priečinok). Núdza: 144 záchranka, 117 polícia, 118 hasiči, 1414 Rega.","aare"],
+  ],
+  foot:'Zostavené z oficiálnych stránok mesta Bern, kantónu Bern a federácie, overené '+V+'. Lehoty a sumy sa menia: platí odkazovaný zdroj, nie táto stránka. Nie je to právne poradenstvo. Žiadne sledovanie. <a href="https://github.com/richardcervenka111-create/neu-in-bern">GitHub</a> · MIT'}};
+let lang="de"; const KEY="neu-in-bern-state"; let state={}; try{state=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){state={};}
+const $=id=>document.getElementById(id); const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function render(){ const T=L[lang]; document.documentElement.lang=lang; document.title=T.h; $("h").textContent=T.h; $("s").textContent=T.s; $("foot").innerHTML=T.foot;
+  let done=0; $("list").innerHTML=T.items.map((it,i)=>{ if(state[i]) done++; const s=SRC[it[4]]; return `<label class="it${state[i]?" done":""}"><input type="checkbox" data-i="${i}"${state[i]?" checked":""}><div><span class="dl ${it[1]}">${esc(it[0])}</span><b>${esc(it[2])}</b><div class="d">${esc(it[3])}</div><div class="src">${T.src}: <a href="${s[1]}" rel="noopener">${esc(s[0])}</a> · ${V}</div></div></label>`; }).join("");
+  $("bar").style.width=(done/T.items.length*100)+"%"; $("pt").textContent=`${done} / ${T.items.length} ${T.done}`;
+  document.querySelectorAll("input[data-i]").forEach(c=>c.addEventListener("change",()=>{ state[c.dataset.i]=c.checked; try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} render(); }));
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang?"true":"false")); }
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.l; render();}));
+render();
+})();
+</script>
+</body>
+</html>
