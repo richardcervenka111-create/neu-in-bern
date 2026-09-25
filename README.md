@@ -1,6 +1,6 @@
 # Neu in Bern: die ersten 30 Tage
 
-Neun Dinge, die nach dem Einzug zuerst kommen, mit Frist, offizieller Quelle und Prüfdatum: Anmeldung (14 Tage), Krankenkasse (3 Monate), Serafe, Abfall, Schule, Deutsch, Mietformular, Nachbarn, Aare. Abhaken im Browser, DE/EN/SK, kein Tracking.
+Neun Dinge, die nach dem Einzug zuerst kommen, mit Frist, offizieller Quelle und Prüfdatum: Anmeldung (14 Tage), Krankenkasse (3 Monate), Serafe, Abfall, Schule, Deutsch, Mietformular, Nachbarn, Aare. Abhaken im Browser, DE/EN, kein Tracking.
 
 Live: **https://richardcervenka111-create.github.io/neu-in-bern/**
 
